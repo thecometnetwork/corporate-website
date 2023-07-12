@@ -1,10 +1,4 @@
-"use client";
-
-import {Flex, Image, Center} from "@chakra-ui/react";
 import {Providers} from "./providers";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import FBChat from "../components/FBChat";
 
 import {Montserrat} from "next/font/google";
 
@@ -20,25 +14,16 @@ export default function RootLayout({children}) {
     <html lang="en">
       <body className={montserrat.className}>
         <Providers>
-          <Flex
-            direction="column"
-            alignContent="center"
-            justifyContent="center"
-          >
-            <Center p={4}>
-              <Image
-                src="/the-comet-network-outline.png"
-                width="348px"
-                height="112px"
-              />
-            </Center>
-            {/* <Header /> */}
-            {children}
-            <Footer />
-            <FBChat />
-          </Flex>
+          {/* <Header /> */}
+          {children}
         </Providers>
       </body>
     </html>
   );
 }
+
+export const metadata = {
+  title: "The Comet Network s.r.o.",
+  description:
+    "Discover the digital revolution with The Comet Network. We are a leading digital agency specializing in creating powerful websites, seamless web applications, and captivating graphic designs. Transform your online presence and unlock your brand's potential today.",
+};
