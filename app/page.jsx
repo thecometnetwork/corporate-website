@@ -160,7 +160,7 @@ export default function Page() {
                   >
                     <Heading
                       // textAlign={useBreakpointValue({base: "left", md: "center"})}
-                      fontSize={useBreakpointValue({base: "68px", md: "162px"})}
+                      fontSize={useBreakpointValue({base: "68px", md: "140px"})}
                       color="orange.400"
                       // bgGradient="linear(to-l, orange.400, gray.800)"
                       // bgClip="text"
