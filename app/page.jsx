@@ -15,6 +15,8 @@ import {
   AbsoluteCenter,
   Button,
   useBreakpointValue,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react";
 import Hero from "../components/Hero";
 import content from "../constants/content";
@@ -149,62 +151,71 @@ export default function Page() {
               What do we do?
             </Heading>
           </Fade>
-          {content.sections.map((section, index) => {
-            return (
-              <Fade
-                width={"100%"}
-                duration={800}
-                delay={300 * index}
-              >
-                <Container
-                  minW="90%"
-                  key={index}
+          <Grid templateColumns="repeat(1, 1fr)">
+            {content.sections.map((section, index) => {
+              return (
+                <Fade
+                  width={"100%"}
+                  duration={800}
+                  delay={300 * index}
                 >
-                  <Stack
-                    direction={direction}
-                    alignItems={"center"}
-                    alignContent={"space-around"}
-                  >
-                    <VStack
-                      alignItems={useBreakpointValue({base: "center", md: "start"})}
-                      p={8}
-                      textAlign={"left"}
+                  <GridItem>
+                    <Stack
+                      direction={direction}
+                      alignItems={"center"}
+                      alignContent={"space-around"}
+                      _sx={{
+                        border: "1px solid black",
+                      }}
+                      _hover={{
+                        borderColor: "orange.400",
+                      }}
                     >
-                      <Heading
-                        // textAlign={useBreakpointValue({base: "left", md: "center"})}
-                        fontSize={useBreakpointValue({base: "68px", md: "140px"})}
-                        color="orange.400"
-                        // bgGradient="linear(to-l, orange.400, gray.800)"
-                        // bgClip="text"
-                        // fontSize='6xl'
-                        fontWeight="extrabold"
+                      <VStack
+                        alignItems={useBreakpointValue({base: "center", md: "start"})}
+                        p={8}
+                        textAlign={"left"}
                       >
-                        {section.heading}
-                      </Heading>
+                        <Heading
+                          // textAlign={useBreakpointValue({base: "left", md: "center"})}
+                          fontSize={useBreakpointValue({base: "68px", md: "140px"})}
+                          color="orange.400"
+                          // bgGradient="linear(to-l, orange.400, gray.800)"
+                          // bgClip="text"
+                          // fontSize='6xl'
+                          fontWeight="extrabold"
+                          _hover={{
+                            color: "gray.800",
+                            transition: "color 800ms",
+                          }}
+                        >
+                          {section.heading}
+                        </Heading>
 
-                      <Text
-                        fontSize={"larger"}
-                        fontWeight={600}
-                      >
-                        {section.content}
-                      </Text>
-                    </VStack>
-                    {/* </Fade>
+                        <Text
+                          fontSize={"larger"}
+                          fontWeight={600}
+                        >
+                          {section.content}
+                        </Text>
+                      </VStack>
+                      {/* </Fade>
                 <Fade
                   width={"100%"}
                   duration={800}
                   delay={600 * index}
                 > */}
-                    <Image
-                      src={section.image}
-                      w={"100%"}
-                      h={"100%"}
-                    />
-                  </Stack>
-                </Container>
-              </Fade>
-            );
-          })}
+                      {/* <Image
+                        src={section.image}
+                        w={"100%"}
+                        h={"100%"}
+                      /> */}
+                    </Stack>
+                  </GridItem>
+                </Fade>
+              );
+            })}
+          </Grid>
           <Center py={32}>
             <VStack spacing={4}>
               <Heading color="orange.400">Have a cool project in mind? Get in touch with us and let's make it happen!</Heading>
@@ -215,6 +226,7 @@ export default function Page() {
                 Have a cool project in mind? Get in touch with us and let's make it happen!
               </Text>
               <Button
+                as="a"
                 variant="outline"
                 colorScheme="orange"
                 size="lg"

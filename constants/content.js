@@ -24,6 +24,11 @@ const content = {
         "We bet that at some point in time you needed some graphic work and you did not know where to turn to. Good news! We've got your back! We can do logos, brand identity boards, flyers, catalogues, invitations and more - just drop us a message, and let's make it a success!",
       image: "/design.svg",
     },
+    {
+      heading: "Integrations",
+      content:
+        "We can develop integrations for pretty much everything that speaks REST. Either by using existing official packages or developing a custom solution we can integrate external tools such as payment gateways, email-sending platform or even some custom application you already own.",
+    },
   ],
 };
 
