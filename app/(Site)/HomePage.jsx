@@ -18,17 +18,15 @@ import {
   Grid,
   GridItem,
 } from "@chakra-ui/react";
-import Hero from "../components/Hero";
-import content from "../constants/content";
+import Hero from "../../components/Hero";
+import content from "../../constants/content";
 import {Fade, Zoom} from "react-reveal";
 
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import FBChat from "../components/FBChat";
+import FBChat from "../../components/FBChat";
 
 //
 
-export default function Page() {
+export default function HomePage() {
   const direction = useBreakpointValue({
     base: "column",
     md: "row",
@@ -41,13 +39,13 @@ export default function Page() {
         alignContent="center"
         justifyContent="center"
       >
-        <Center p={4}>
+        {/* <Center p={4}>
           <Image
             src="/the-comet-network-outline.png"
             width="348px"
             height="112px"
           />
-        </Center>
+        </Center> */}
         <Container
           minW="90%"
           textAlign="center"
@@ -237,7 +235,6 @@ export default function Page() {
             </VStack>
           </Center>
         </Container>
-        <Footer />
         <FBChat />
       </Flex>
     </>

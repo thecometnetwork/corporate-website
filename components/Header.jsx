@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Box,
   Flex,
@@ -17,7 +19,6 @@ import {
 } from "@chakra-ui/react";
 import {HamburgerIcon, CloseIcon, ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import Logo from "./Logo";
-import Fade from "react-reveal";
 
 export default function WithSubnavigation() {
   const {isOpen, onToggle} = useDisclosure();
@@ -25,8 +26,8 @@ export default function WithSubnavigation() {
   return (
     <Box>
       <Flex
-        bg="gray.800"
-        color="gray.300"
+        bg="white"
+        color="orange.400"
         minH={"100px"}
         py={{base: 2}}
         px={{base: 4}}
@@ -63,9 +64,7 @@ export default function WithSubnavigation() {
           flex={{base: 1}}
           justify={{base: "center", md: "start"}}
         >
-          <Zoom>
-            <Logo />
-          </Zoom>
+          <Logo />
           <Flex
             display={{base: "none", md: "flex"}}
             ml={10}
@@ -74,13 +73,13 @@ export default function WithSubnavigation() {
           </Flex>
         </Flex>
 
-        {/* <Stack
+        <Stack
           flex={{base: 1, md: 0}}
           justify={"flex-end"}
           direction={"row"}
           spacing={6}
         >
-          <Button
+          {/* <Button
             as={"a"}
             fontSize={"sm"}
             fontWeight={400}
@@ -88,22 +87,22 @@ export default function WithSubnavigation() {
             href={"#"}
           >
             Sign In
-          </Button>
+          </Button> */}
           <Button
             as={"a"}
             display={{base: "none", md: "inline-flex"}}
             fontSize={"sm"}
-            fontWeight={600}
+            fontWeight={800}
             color={"white"}
-            bg={"pink.400"}
+            bg={"orange.400"}
             href={"#"}
             _hover={{
-              bg: "pink.300",
+              bg: "gray.800",
             }}
           >
-            Sign Up
+            Customer Login
           </Button>
-        </Stack> */}
+        </Stack>
       </Flex>
 
       <Collapse
@@ -117,8 +116,8 @@ export default function WithSubnavigation() {
 }
 
 const DesktopNav = () => {
-  const linkColor = "gray.300";
-  const linkHoverColor = "#F89721";
+  const linkColor = "gray.800";
+  const linkHoverColor = "orange.400";
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
 
   return (
@@ -138,7 +137,7 @@ const DesktopNav = () => {
                 // p={2}
                 href={navItem.href ?? "#"}
                 fontSize={"sm"}
-                fontWeight={500}
+                fontWeight={800}
                 color={linkColor}
                 _hover={{
                   textDecoration: "none",
@@ -303,8 +302,8 @@ const MobileNavItem = ({label, children, href}) => {
 
 const NAV_ITEMS = [
   {
-    label: "Solutions",
-    href: "solutions",
+    label: "Webistes",
+    href: "websites",
     // children: [
     //   {
     //     label: "CMS and Websites",
@@ -319,8 +318,8 @@ const NAV_ITEMS = [
     // ],
   },
   {
-    label: "Our Stack",
-    href: "our-stack",
+    label: "E-comm",
+    href: "e-comm",
     // children: [
     //   {
     //     label: "Job Board",
@@ -335,7 +334,11 @@ const NAV_ITEMS = [
     // ],
   },
   {
-    label: "Prices",
-    href: "prices",
+    label: "Graphic Design",
+    href: "graphic-design",
+  },
+  {
+    label: "Integrations",
+    href: "integrations",
   },
 ];
