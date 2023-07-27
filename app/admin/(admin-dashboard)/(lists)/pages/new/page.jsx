@@ -1,11 +1,13 @@
 "use client";
 
 import {Input, Heading, Container, FormLabel, VStack, Button, FormControl} from "@chakra-ui/react";
-import {CKEditor} from "@ckeditor/ckeditor5-react";
+
 import {createClientComponentClient} from "@supabase/auth-helpers-nextjs";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import schemas from "../../../../../../constants/schemas";
 import {useRef, useState} from "react";
+import dynamic from "next/dynamic";
+
+const TCNEditor = dynamic(() => import("../../../../../../components/Editor"), {ssr: false});
 
 export default function page() {
   const [content, setContent] = useState();
@@ -50,10 +52,7 @@ export default function page() {
               return (
                 <>
                   <FormLabel>{schemas.page.fields[field].name}</FormLabel>
-                  <CKEditor
-                    editor={ClassicEditor}
-                    data="<p>Hello from CKEditor 5!</p>"
-                  />
+                  <TCNEditor data="<p>Hello from CKEditor 5!</p>" />
                 </>
               );
             }

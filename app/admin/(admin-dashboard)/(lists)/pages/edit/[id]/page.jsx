@@ -1,15 +1,16 @@
 "use client";
 
 import {Input, Heading, Container, FormLabel, VStack, Button, FormControl} from "@chakra-ui/react";
-import {CKEditor} from "@ckeditor/ckeditor5-react";
 import {createClientComponentClient} from "@supabase/auth-helpers-nextjs";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import schemas from "../../../../../../../constants/schemas";
 import {useRef, useState, useEffect, Suspense} from "react";
 import Loading from "../../loading";
 import {useRouter} from "next/navigation";
+import dynamic from "next/dynamic";
 
 export default function page({params}) {
+  const TCNEditor = dynamic(() => import("../../../../../../../components/Editor"), {ssr: false});
+
   const [content, setContent] = useState();
   const [pageData, setPageData] = useState();
   const supabase = createClientComponentClient();
@@ -71,26 +72,7 @@ export default function page({params}) {
               return (
                 <>
                   <FormLabel>{schemas.page.fields[field].name}</FormLabel>
-                  <CKEditor
-                    editor={ClassicEditor}
-                    data={pageData && pageData.content}
-                    // data="test"
-                    onReady={(editor) => {
-                      // You can store the "editor" and use when it is needed.
-                      console.log("Editor is ready to use!", editor);
-                    }}
-                    onChange={(event, editor) => {
-                      const data = editor.getData();
-                      console.log({event, editor, data});
-                      setContent(data);
-                    }}
-                    onBlur={(event, editor) => {
-                      console.log("Blur.", editor);
-                    }}
-                    onFocus={(event, editor) => {
-                      console.log("Focus.", editor);
-                    }}
-                  />
+                  <TCNEditor data={pageData && pageData.content} />
                 </>
               );
             }
