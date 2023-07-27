@@ -9,16 +9,21 @@ import {
   Stack,
   Collapse,
   Icon,
-  Link,
+  // Link,
   Popover,
   PopoverTrigger,
   PopoverContent,
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  chakra,
 } from "@chakra-ui/react";
 import {HamburgerIcon, CloseIcon, ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import Logo from "./Logo";
+import Link from "next/link";
+import NAV_ITEMS from "../constants/menu";
+
+const ChakraLink = chakra(Link);
 
 export default function WithSubnavigation() {
   const {isOpen, onToggle} = useDisclosure();
@@ -64,7 +69,9 @@ export default function WithSubnavigation() {
           flex={{base: 1}}
           justify={{base: "center", md: "start"}}
         >
-          <Logo />
+          <ChakraLink href="/">
+            <Logo />
+          </ChakraLink>
           <Flex
             display={{base: "none", md: "flex"}}
             ml={10}
@@ -133,7 +140,7 @@ const DesktopNav = () => {
             placement={"bottom-start"}
           >
             <PopoverTrigger _hover={{border: "1px solid #F89721"}}>
-              <Link
+              <ChakraLink
                 // p={2}
                 href={navItem.href ?? "#"}
                 fontSize={"sm"}
@@ -145,7 +152,7 @@ const DesktopNav = () => {
                 }}
               >
                 {navItem.label}
-              </Link>
+              </ChakraLink>
             </PopoverTrigger>
 
             {navItem.children && (
@@ -176,7 +183,7 @@ const DesktopNav = () => {
 
 const DesktopSubNav = ({label, href, subLabel}) => {
   return (
-    <Link
+    <ChakraLink
       href={href}
       role={"group"}
       display={"block"}
@@ -215,7 +222,7 @@ const DesktopSubNav = ({label, href, subLabel}) => {
           />
         </Flex>
       </Stack>
-    </Link>
+    </ChakraLink>
   );
 };
 
@@ -246,7 +253,7 @@ const MobileNavItem = ({label, children, href}) => {
     >
       <Flex
         py={2}
-        as={Link}
+        as={ChakraLink}
         href={href ?? "#"}
         justify={"space-between"}
         align={"center"}
@@ -286,59 +293,16 @@ const MobileNavItem = ({label, children, href}) => {
         >
           {children &&
             children.map((child) => (
-              <Link
+              <ChakraLink
                 key={child.label}
                 py={2}
                 href={child.href}
               >
                 {child.label}
-              </Link>
+              </ChakraLink>
             ))}
         </Stack>
       </Collapse>
     </Stack>
   );
 };
-
-const NAV_ITEMS = [
-  {
-    label: "Webistes",
-    href: "websites",
-    // children: [
-    //   {
-    //     label: "CMS and Websites",
-    //     subLabel: "Everything you need to manage your content",
-    //     href: "cms-and-websites",
-    //   },
-    //   {
-    //     label: "New & Noteworthy",
-    //     subLabel: "Up-and-coming Designers",
-    //     href: "#",
-    //   },
-    // ],
-  },
-  {
-    label: "E-comm",
-    href: "e-comm",
-    // children: [
-    //   {
-    //     label: "Job Board",
-    //     subLabel: "Find your dream design job",
-    //     href: "#",
-    //   },
-    //   {
-    //     label: "Freelance Projects",
-    //     subLabel: "An exclusive list for contract work",
-    //     href: "#",
-    //   },
-    // ],
-  },
-  {
-    label: "Graphic Design",
-    href: "graphic-design",
-  },
-  {
-    label: "Integrations",
-    href: "integrations",
-  },
-];

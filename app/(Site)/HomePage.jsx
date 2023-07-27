@@ -17,12 +17,17 @@ import {
   useBreakpointValue,
   Grid,
   GridItem,
+  FormControl,
+  FormLabel,
+  Input,
 } from "@chakra-ui/react";
 import Hero from "../../components/Hero";
+import ContactForm from "../../components/ContactForm";
 import content from "../../constants/content";
 import {Fade, Zoom} from "react-reveal";
-
+import {createClientComponentClient} from "@supabase/auth-helpers-nextjs";
 import FBChat from "../../components/FBChat";
+import {useState} from "react";
 
 //
 
@@ -31,6 +36,34 @@ export default function HomePage() {
     base: "column",
     md: "row",
   });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [formHasError, setFormHasError] = useState(false);
+  const [formSuccess, setFormSuccess] = useState(false);
+
+  const supabase = createClientComponentClient();
+
+  async function handleSubmit() {
+    const contactMessage = {
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      message: document.getElementById("message").value,
+    };
+
+    setIsLoading(true);
+
+    const {data, error} = await supabase.from("tcn_website_contact_submissions").insert(contactMessage);
+
+    setIsLoading(false);
+
+    if (error) {
+      console.log(error);
+      setFormHasError(true);
+    } else {
+      setFormHasError(false);
+      setFormSuccess(true);
+    }
+  }
 
   return (
     <>
@@ -217,21 +250,13 @@ export default function HomePage() {
           <Center py={32}>
             <VStack spacing={4}>
               <Heading color="orange.400">Have a cool project in mind? Get in touch with us and let's make it happen!</Heading>
-              <Text
-                fontSize={"larger"}
-                fontWeight={600}
-              >
-                Have a cool project in mind? Get in touch with us and let's make it happen!
-              </Text>
-              <Button
-                as="a"
-                variant="outline"
-                colorScheme="orange"
-                size="lg"
-                href="mailto:support@thecometnetwork.cz"
-              >
-                Drop us an email &#128521;
-              </Button>
+              <Container>
+                <ContactForm
+                  handleSubmit={handleSubmit}
+                  formHasError={formHasError}
+                  formSuccess={formSuccess}
+                />
+              </Container>
             </VStack>
           </Center>
         </Container>

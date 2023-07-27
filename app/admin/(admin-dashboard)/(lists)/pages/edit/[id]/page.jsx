@@ -38,7 +38,7 @@ export default function page({params}) {
     });
 
     page.content = content;
-    const {data, error} = await supabase.from("tcn_website_pages").update(page).eq("id", "2").select();
+    const {data, error} = await supabase.from("tcn_website_pages").update(page).eq("id", params.id).select();
     if (error) {
       console.error(error);
     }
