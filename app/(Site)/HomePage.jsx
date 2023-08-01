@@ -20,14 +20,16 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Link,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 import Hero from "../../components/Hero";
 import ContactForm from "../../components/ContactForm";
 import content from "../../constants/content";
 import {Fade, Zoom} from "react-reveal";
-import {createClientComponentClient} from "@supabase/auth-helpers-nextjs";
 import FBChat from "../../components/FBChat";
-import {useState} from "react";
+import {IconName} from "react-icons/fa6";
+import {ChevronRightIcon} from "@chakra-ui/icons";
 
 //
 
@@ -37,40 +39,13 @@ export default function HomePage() {
     md: "row",
   });
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [formHasError, setFormHasError] = useState(false);
-  const [formSuccess, setFormSuccess] = useState(false);
-
-  const supabase = createClientComponentClient();
-
-  async function handleSubmit() {
-    const contactMessage = {
-      name: document.getElementById("name").value,
-      email: document.getElementById("email").value,
-      message: document.getElementById("message").value,
-    };
-
-    setIsLoading(true);
-
-    const {data, error} = await supabase.from("tcn_website_contact_submissions").insert(contactMessage);
-
-    setIsLoading(false);
-
-    if (error) {
-      console.log(error);
-      setFormHasError(true);
-    } else {
-      setFormHasError(false);
-      setFormSuccess(true);
-    }
-  }
-
   return (
     <>
       <Flex
         direction="column"
         alignContent="center"
         justifyContent="center"
+        flex="1 1 0"
       >
         {/* <Center p={4}>
           <Image
@@ -191,57 +166,68 @@ export default function HomePage() {
                   delay={300 * index}
                 >
                   <GridItem>
-                    <Stack
-                      direction={direction}
-                      alignItems={"center"}
-                      alignContent={"space-around"}
-                      _sx={{
-                        border: "1px solid black",
-                      }}
-                      _hover={{
-                        borderColor: "orange.400",
-                      }}
+                    <Link
+                      as={NextLink}
+                      href={`/${section.href}`}
+                      _hover={{textDecoration: "none"}}
                     >
-                      <VStack
-                        alignItems={useBreakpointValue({base: "center", md: "start"})}
-                        p={8}
-                        textAlign={"left"}
+                      <Stack
+                        direction={direction}
+                        alignItems={"center"}
+                        alignContent={"space-around"}
+                        _sx={{
+                          border: "1px solid black",
+                        }}
+                        _hover={{
+                          borderColor: "orange.400",
+                        }}
                       >
-                        <Heading
-                          // textAlign={useBreakpointValue({base: "left", md: "center"})}
-                          fontSize={useBreakpointValue({base: "68px", md: "140px"})}
-                          color="orange.400"
-                          // bgGradient="linear(to-l, orange.400, gray.800)"
-                          // bgClip="text"
-                          // fontSize='6xl'
-                          fontWeight="extrabold"
-                          _hover={{
-                            color: "gray.800",
-                            transition: "color 800ms",
-                          }}
+                        <VStack
+                          alignItems={useBreakpointValue({base: "center", md: "start"})}
+                          p={8}
+                          textAlign={"left"}
+                          role="group"
                         >
-                          {section.heading}
-                        </Heading>
+                          <Heading
+                            // textAlign={useBreakpointValue({base: "left", md: "center"})}
+                            fontSize={useBreakpointValue({base: "68px", md: "140px"})}
+                            color="orange.400"
+                            // bgGradient="linear(to-l, orange.400, gray.800)"
+                            // bgClip="text"
+                            // fontSize='6xl'
+                            fontWeight="extrabold"
+                            _groupHover={{
+                              color: "gray.800",
+                              transition: "color 800ms",
+                            }}
+                          >
+                            {section.heading}
+                            <ChevronRightIcon
+                              sx={{opacity: "0%"}}
+                              _groupHover={{opacity: "100%", transition: "opacity 800ms"}}
+                            />
+                          </Heading>
 
-                        <Text
-                          fontSize={"larger"}
-                          fontWeight={600}
-                        >
-                          {section.content}
-                        </Text>
-                      </VStack>
-                      {/* </Fade>
+                          <Text
+                            fontSize={"larger"}
+                            fontWeight={600}
+                          >
+                            {section.content}
+                          </Text>
+                        </VStack>
+                        {/* </Fade>
                 <Fade
                   width={"100%"}
                   duration={800}
                   delay={600 * index}
                 > */}
-                      {/* <Image
+                        {/* <Image
                         src={section.image}
                         w={"100%"}
                         h={"100%"}
                       /> */}
-                    </Stack>
+                      </Stack>
+                    </Link>
                   </GridItem>
                 </Fade>
               );
@@ -251,11 +237,7 @@ export default function HomePage() {
             <VStack spacing={4}>
               <Heading color="orange.400">Have a cool project in mind? Get in touch with us and let's make it happen!</Heading>
               <Container>
-                <ContactForm
-                  handleSubmit={handleSubmit}
-                  formHasError={formHasError}
-                  formSuccess={formSuccess}
-                />
+                <ContactForm />
               </Container>
             </VStack>
           </Center>

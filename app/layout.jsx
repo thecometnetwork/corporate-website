@@ -12,8 +12,14 @@ const montserrat = Montserrat({
 
 export default function RootLayout({children}) {
   return (
-    <html lang="en">
-      <body className={montserrat.className}>
+    <html
+      lang="en"
+      style={{minHeight: "100vh"}}
+    >
+      <body
+        className={montserrat.className}
+        style={{minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between", overflowX: "hidden"}}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

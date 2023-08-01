@@ -1,8 +1,11 @@
 "use client";
 
-import {Container, Flex, Heading, Text, Button, VStack, Center, Square, useBreakpointValue} from "@chakra-ui/react";
+import {Container, Flex, Heading, Text, Button, VStack, Center, Square, useBreakpointValue, useDisclosure} from "@chakra-ui/react";
+import VerticallyCenteredModal from "./VerticallyCenteredModal";
+import ContactForm from "./ContactForm";
 
-export default function Pricing({name, features, discounted_price, original_price}) {
+export default function Pricing({name, features, discounted_price, original_price, onClick, id}) {
+  const {isOpen, onOpen, onClose} = useDisclosure();
   return (
     <Flex
       direction="column"
@@ -41,7 +44,14 @@ export default function Pricing({name, features, discounted_price, original_pric
           return <Text>{feature}</Text>;
         })}
       </VStack>
-      <Button>I'm interested!</Button>
+      <Button onClick={onOpen}>I'm interested!</Button>
+      <VerticallyCenteredModal
+        header={`Inquiry for ${name}`}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ContactForm id={id} />
+      </VerticallyCenteredModal>
     </Flex>
   );
 }

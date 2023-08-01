@@ -1,7 +1,15 @@
 import {Input, FormControl, FormLabel, FormHelperText, Button, Textarea, VStack, Alert, useDisclosure, CloseButton} from "@chakra-ui/react";
+import {createClientComponentClient} from "@supabase/auth-helpers-nextjs";
+import {useState} from "react";
 
-export default function ContactForm({handleSubmit, formHasError, formSuccess}) {
+export default function ContactForm(props) {
+  const id = props.id ?? "";
+
   const {isOpen: isVisible, onClose, onOpen} = useDisclosure({defaultIsOpen: true});
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [formHasError, setFormHasError] = useState(false);
+  const [formSuccess, setFormSuccess] = useState(false);
 
   const FORM_FIELDS = [
     {
@@ -24,6 +32,30 @@ export default function ContactForm({handleSubmit, formHasError, formSuccess}) {
     },
   ];
 
+  const supabase = createClientComponentClient();
+
+  async function handleSubmit() {
+    const contactMessage = {
+      name: document.getElementById(id + "name").value,
+      email: document.getElementById(id + "email").value,
+      message: document.getElementById(id + "message").value,
+    };
+
+    setIsLoading(true);
+
+    const {data, error} = await supabase.from("tcn_website_contact_submissions").insert(contactMessage);
+
+    setIsLoading(false);
+
+    if (error) {
+      console.log(error);
+      setFormHasError(true);
+    } else {
+      setFormHasError(false);
+      setFormSuccess(true);
+    }
+  }
+
   return (
     <>
       <VStack>
@@ -35,14 +67,14 @@ export default function ContactForm({handleSubmit, formHasError, formSuccess}) {
                 <Input
                   type="email"
                   focusBorderColor="orange.400"
-                  id={field.name}
+                  id={id + field.name}
                   name={field.name}
                 />
               ) : (
                 <Textarea
                   resize="none"
                   focusBorderColor="orange.400"
-                  id={field.name}
+                  id={id + field.name}
                   name={field.name}
                 />
               )}
@@ -64,16 +96,20 @@ export default function ContactForm({handleSubmit, formHasError, formSuccess}) {
           </Alert>
         ) : null}
         {formSuccess == true ? (
-          <Alert status="success">
-            Message sent succesfully! We'll get back to you within 8 hours 😎
-            <CloseButton
-              alignSelf="flex-start"
-              position="relative"
-              right={-1}
-              top={-1}
-              onClick={onClose}
-            />
-          </Alert>
+          <>
+            {isVisible ? (
+              <Alert status="success">
+                Message sent succesfully! We'll get back to you within 8 hours 😎
+                <CloseButton
+                  alignSelf="flex-start"
+                  position="relative"
+                  right={-1}
+                  top={-1}
+                  onClick={onClose}
+                />
+              </Alert>
+            ) : null}
+          </>
         ) : null}
       </VStack>
     </>

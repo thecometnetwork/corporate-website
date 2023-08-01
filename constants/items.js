@@ -24,6 +24,12 @@ const items = {
     ],
   },
 
+  nextjs: {
+    title: "Advanced Websites and Web applications",
+    description: "Powered by Next.js, a React framework. Fast and completely customizable. Each functionality can be built on-demand.",
+    pricing: "From 50000 Kč",
+  },
+
   //Next.js
 };
 
