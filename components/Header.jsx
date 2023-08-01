@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Box,
   Flex,
@@ -7,17 +9,21 @@ import {
   Stack,
   Collapse,
   Icon,
-  Link,
+  // Link,
   Popover,
   PopoverTrigger,
   PopoverContent,
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  chakra,
 } from "@chakra-ui/react";
 import {HamburgerIcon, CloseIcon, ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import Logo from "./Logo";
-import Fade from "react-reveal";
+import Link from "next/link";
+import NAV_ITEMS from "../constants/menu";
+
+const ChakraLink = chakra(Link);
 
 export default function WithSubnavigation() {
   const {isOpen, onToggle} = useDisclosure();
@@ -25,8 +31,8 @@ export default function WithSubnavigation() {
   return (
     <Box>
       <Flex
-        bg="gray.800"
-        color="gray.300"
+        bg="white"
+        color="orange.400"
         minH={"100px"}
         py={{base: 2}}
         px={{base: 4}}
@@ -63,9 +69,9 @@ export default function WithSubnavigation() {
           flex={{base: 1}}
           justify={{base: "center", md: "start"}}
         >
-          <Zoom>
+          <ChakraLink href="/">
             <Logo />
-          </Zoom>
+          </ChakraLink>
           <Flex
             display={{base: "none", md: "flex"}}
             ml={10}
@@ -74,13 +80,13 @@ export default function WithSubnavigation() {
           </Flex>
         </Flex>
 
-        {/* <Stack
+        <Stack
           flex={{base: 1, md: 0}}
           justify={"flex-end"}
           direction={"row"}
           spacing={6}
         >
-          <Button
+          {/* <Button
             as={"a"}
             fontSize={"sm"}
             fontWeight={400}
@@ -88,22 +94,22 @@ export default function WithSubnavigation() {
             href={"#"}
           >
             Sign In
-          </Button>
+          </Button> */}
           <Button
             as={"a"}
             display={{base: "none", md: "inline-flex"}}
             fontSize={"sm"}
-            fontWeight={600}
+            fontWeight={800}
             color={"white"}
-            bg={"pink.400"}
+            bg={"orange.400"}
             href={"#"}
             _hover={{
-              bg: "pink.300",
+              bg: "gray.800",
             }}
           >
-            Sign Up
+            Customer Login
           </Button>
-        </Stack> */}
+        </Stack>
       </Flex>
 
       <Collapse
@@ -117,8 +123,8 @@ export default function WithSubnavigation() {
 }
 
 const DesktopNav = () => {
-  const linkColor = "gray.300";
-  const linkHoverColor = "#F89721";
+  const linkColor = "gray.800";
+  const linkHoverColor = "orange.400";
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
 
   return (
@@ -134,11 +140,11 @@ const DesktopNav = () => {
             placement={"bottom-start"}
           >
             <PopoverTrigger _hover={{border: "1px solid #F89721"}}>
-              <Link
+              <ChakraLink
                 // p={2}
                 href={navItem.href ?? "#"}
                 fontSize={"sm"}
-                fontWeight={500}
+                fontWeight={800}
                 color={linkColor}
                 _hover={{
                   textDecoration: "none",
@@ -146,7 +152,7 @@ const DesktopNav = () => {
                 }}
               >
                 {navItem.label}
-              </Link>
+              </ChakraLink>
             </PopoverTrigger>
 
             {navItem.children && (
@@ -177,7 +183,7 @@ const DesktopNav = () => {
 
 const DesktopSubNav = ({label, href, subLabel}) => {
   return (
-    <Link
+    <ChakraLink
       href={href}
       role={"group"}
       display={"block"}
@@ -216,7 +222,7 @@ const DesktopSubNav = ({label, href, subLabel}) => {
           />
         </Flex>
       </Stack>
-    </Link>
+    </ChakraLink>
   );
 };
 
@@ -247,7 +253,7 @@ const MobileNavItem = ({label, children, href}) => {
     >
       <Flex
         py={2}
-        as={Link}
+        as={ChakraLink}
         href={href ?? "#"}
         justify={"space-between"}
         align={"center"}
@@ -287,55 +293,16 @@ const MobileNavItem = ({label, children, href}) => {
         >
           {children &&
             children.map((child) => (
-              <Link
+              <ChakraLink
                 key={child.label}
                 py={2}
                 href={child.href}
               >
                 {child.label}
-              </Link>
+              </ChakraLink>
             ))}
         </Stack>
       </Collapse>
     </Stack>
   );
 };
-
-const NAV_ITEMS = [
-  {
-    label: "Solutions",
-    href: "solutions",
-    // children: [
-    //   {
-    //     label: "CMS and Websites",
-    //     subLabel: "Everything you need to manage your content",
-    //     href: "cms-and-websites",
-    //   },
-    //   {
-    //     label: "New & Noteworthy",
-    //     subLabel: "Up-and-coming Designers",
-    //     href: "#",
-    //   },
-    // ],
-  },
-  {
-    label: "Our Stack",
-    href: "our-stack",
-    // children: [
-    //   {
-    //     label: "Job Board",
-    //     subLabel: "Find your dream design job",
-    //     href: "#",
-    //   },
-    //   {
-    //     label: "Freelance Projects",
-    //     subLabel: "An exclusive list for contract work",
-    //     href: "#",
-    //   },
-    // ],
-  },
-  {
-    label: "Prices",
-    href: "prices",
-  },
-];

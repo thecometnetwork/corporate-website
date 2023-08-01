@@ -17,18 +17,23 @@ import {
   useBreakpointValue,
   Grid,
   GridItem,
+  FormControl,
+  FormLabel,
+  Input,
+  Link,
 } from "@chakra-ui/react";
-import Hero from "../components/Hero";
-import content from "../constants/content";
+import NextLink from "next/link";
+import Hero from "../../components/Hero";
+import ContactForm from "../../components/ContactForm";
+import content from "../../constants/content";
 import {Fade, Zoom} from "react-reveal";
-
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import FBChat from "../components/FBChat";
+import FBChat from "../../components/FBChat";
+import {IconName} from "react-icons/fa6";
+import {ChevronRightIcon} from "@chakra-ui/icons";
 
 //
 
-export default function Page() {
+export default function HomePage() {
   const direction = useBreakpointValue({
     base: "column",
     md: "row",
@@ -40,14 +45,15 @@ export default function Page() {
         direction="column"
         alignContent="center"
         justifyContent="center"
+        flex="1 1 0"
       >
-        <Center p={4}>
+        {/* <Center p={4}>
           <Image
             src="/the-comet-network-outline.png"
             width="348px"
             height="112px"
           />
-        </Center>
+        </Center> */}
         <Container
           minW="90%"
           textAlign="center"
@@ -160,57 +166,68 @@ export default function Page() {
                   delay={300 * index}
                 >
                   <GridItem>
-                    <Stack
-                      direction={direction}
-                      alignItems={"center"}
-                      alignContent={"space-around"}
-                      _sx={{
-                        border: "1px solid black",
-                      }}
-                      _hover={{
-                        borderColor: "orange.400",
-                      }}
+                    <Link
+                      as={NextLink}
+                      href={`/${section.href}`}
+                      _hover={{textDecoration: "none"}}
                     >
-                      <VStack
-                        alignItems={useBreakpointValue({base: "center", md: "start"})}
-                        p={8}
-                        textAlign={"left"}
+                      <Stack
+                        direction={direction}
+                        alignItems={"center"}
+                        alignContent={"space-around"}
+                        _sx={{
+                          border: "1px solid black",
+                        }}
+                        _hover={{
+                          borderColor: "orange.400",
+                        }}
                       >
-                        <Heading
-                          // textAlign={useBreakpointValue({base: "left", md: "center"})}
-                          fontSize={useBreakpointValue({base: "68px", md: "140px"})}
-                          color="orange.400"
-                          // bgGradient="linear(to-l, orange.400, gray.800)"
-                          // bgClip="text"
-                          // fontSize='6xl'
-                          fontWeight="extrabold"
-                          _hover={{
-                            color: "gray.800",
-                            transition: "color 800ms",
-                          }}
+                        <VStack
+                          alignItems={useBreakpointValue({base: "center", md: "start"})}
+                          p={8}
+                          textAlign={"left"}
+                          role="group"
                         >
-                          {section.heading}
-                        </Heading>
+                          <Heading
+                            // textAlign={useBreakpointValue({base: "left", md: "center"})}
+                            fontSize={useBreakpointValue({base: "68px", md: "140px"})}
+                            color="orange.400"
+                            // bgGradient="linear(to-l, orange.400, gray.800)"
+                            // bgClip="text"
+                            // fontSize='6xl'
+                            fontWeight="extrabold"
+                            _groupHover={{
+                              color: "gray.800",
+                              transition: "color 800ms",
+                            }}
+                          >
+                            {section.heading}
+                            <ChevronRightIcon
+                              sx={{opacity: "0%"}}
+                              _groupHover={{opacity: "100%", transition: "opacity 800ms"}}
+                            />
+                          </Heading>
 
-                        <Text
-                          fontSize={"larger"}
-                          fontWeight={600}
-                        >
-                          {section.content}
-                        </Text>
-                      </VStack>
-                      {/* </Fade>
+                          <Text
+                            fontSize={"larger"}
+                            fontWeight={600}
+                          >
+                            {section.content}
+                          </Text>
+                        </VStack>
+                        {/* </Fade>
                 <Fade
                   width={"100%"}
                   duration={800}
                   delay={600 * index}
                 > */}
-                      {/* <Image
+                        {/* <Image
                         src={section.image}
                         w={"100%"}
                         h={"100%"}
                       /> */}
-                    </Stack>
+                      </Stack>
+                    </Link>
                   </GridItem>
                 </Fade>
               );
@@ -219,25 +236,12 @@ export default function Page() {
           <Center py={32}>
             <VStack spacing={4}>
               <Heading color="orange.400">Have a cool project in mind? Get in touch with us and let's make it happen!</Heading>
-              <Text
-                fontSize={"larger"}
-                fontWeight={600}
-              >
-                Have a cool project in mind? Get in touch with us and let's make it happen!
-              </Text>
-              <Button
-                as="a"
-                variant="outline"
-                colorScheme="orange"
-                size="lg"
-                href="mailto:support@thecometnetwork.cz"
-              >
-                Drop us an email &#128521;
-              </Button>
+              <Container>
+                <ContactForm />
+              </Container>
             </VStack>
           </Center>
         </Container>
-        <Footer />
         <FBChat />
       </Flex>
     </>
