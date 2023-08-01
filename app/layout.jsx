@@ -2,6 +2,7 @@ import {Providers} from "./providers";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import {Montserrat} from "next/font/google";
+import {Analytics} from "@vercel/analytics/react";
 
 const montserrat = Montserrat({
   weight: "400",
@@ -21,6 +22,7 @@ export default function RootLayout({children}) {
         style={{minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between", overflowX: "hidden"}}
       >
         <Providers>{children}</Providers>
+        <Analytics />
       </body>
     </html>
   );
