@@ -55,11 +55,9 @@ export async function generateMetadata({params}, parent) {
   return {
     title: page.meta_title,
     description: page.meta_description,
+    metadataBase: new URL(process.env.BASE_URL),
+    alternates: {
+      canonical: "/" + page.slug,
+    },
   };
 }
-
-// export const metadata = {
-//   title: "First page - The Comet Network s.r.o.",
-//   description:
-//     "Discover the digital revolution with The Comet Network. We are a leading digital agency specializing in creating powerful websites, seamless web applications, and captivating graphic designs. Transform your online presence and unlock your brand's potential today.",
-// };
