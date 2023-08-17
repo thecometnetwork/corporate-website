@@ -2,8 +2,28 @@ import {Box, Center, Flex, Heading, VStack, Link, Text, useBreakpointValue, chak
 import CoolLink from "./CoolLink";
 import {Fade} from "react-reveal";
 import {images, getImageLink} from "./imageLinks";
+import {useState, useEffect} from "react";
 
-export default function () {
+export default function SectionBoxedImage() {
+  const [data, setData] = useState({
+    block: {
+      heading: "Advanced Skincare",
+      subheading:
+        "Our highly qualified therapists will carry out an in depth analysis of your skins needs and create the best programme of treatment for you.",
+      button: "Learn More",
+    },
+  });
+
+  useEffect(() => {
+    console.log(data);
+    window.localStorage.setItem("sbi-component", JSON.stringify(data));
+
+    window.addEventListener("TCNLocalStorageUpdated", (e) => {
+      console.log("event", e);
+      setData(JSON.parse(window.localStorage.getItem("sbi-component")));
+    });
+  }, []);
+
   return (
     <Flex
       direction={useBreakpointValue({base: "column", lg: "row"})}
@@ -37,12 +57,13 @@ export default function () {
             height="100%"
             spacing="8"
           >
-            <Heading fontFamily="Bad Script">Advanced Skincare</Heading>
+            <Heading>{data["block"].heading}</Heading>
             <Text fontSize="2xl">
+              {data["block"].subheading}
               Our highly qualified therapists will carry out an in depth analysis of your skins needs and create the best programme of treatment for
               you.
             </Text>
-            <CoolLink href="/">Learn More</CoolLink>
+            <CoolLink href="/">{data["block"].button}</CoolLink>
           </VStack>
         </Fade>
       </Flex>
@@ -53,7 +74,12 @@ export default function () {
 function BoxedImage({w, h, bg}) {
   return (
     <div style={{width: "50%", position: "relative"}}>
-      <div style={{width: "80%", height: "80%", position: "absolute", left: "0", top: "0", border: "5px solid #FBD2C0", zIndex: "-1"}}></div>
+      <chakra.div
+        style={{width: "80%", height: "80%", position: "absolute", left: "0", top: "0", zIndex: "-1"}}
+        borderWidth="5px"
+        borderStyle="solid"
+        borderColor="accent.100"
+      ></chakra.div>
       <div style={{width: "80%", height: "80%", position: "absolute", right: "0", bottom: "0", border: "5px solid black", zIndex: "-1"}}></div>
       <chakra.div
         sx={{
@@ -77,3 +103,16 @@ function BoxedImage({w, h, bg}) {
     </div>
   );
 }
+
+SectionBoxedImage.editableProps = {
+  componentName: "sbi-component",
+  block: {
+    name: "block",
+    label: "Block 1",
+    elements: [
+      {element: "heading", type: "text"},
+      {element: "subheading", type: "text"},
+      {element: "button", type: "text"},
+    ],
+  },
+};

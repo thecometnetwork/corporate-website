@@ -1,11 +1,34 @@
 import {Center, Flex, Heading, Text, VStack, useBreakpointValue, chakra, Container, Image} from "@chakra-ui/react";
-import {Children} from "react";
+import {useEffect, useState} from "react";
 import {images, getImageCSSLink} from "./imageLinks";
 import {Fade} from "react-reveal";
 
 const OrderedFlexTile = chakra(FlexTile);
 
 export default function SectionWithBlocks() {
+  const [data, setData] = useState({
+    block_1: {
+      heading: "A unique place 1",
+      paragraph:
+        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis condimentum augue id magna semper rutrum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
+    },
+    block_2: {
+      heading: "A unique place 2",
+      paragraph:
+        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis condimentum augue id magna semper rutrum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
+    },
+  });
+
+  useEffect(() => {
+    console.log(data);
+    window.localStorage.setItem("swb-component", JSON.stringify(data));
+
+    window.addEventListener("TCNLocalStorageUpdated", (e) => {
+      console.log("event", e);
+      setData(JSON.parse(window.localStorage.getItem("swb-component")));
+    });
+  }, []);
+
   return (
     <Flex
       direction="column"
@@ -26,22 +49,20 @@ export default function SectionWithBlocks() {
             width="100%"
             p={4}
             spacing="10"
+            id="swb-block_1"
           >
             <Heading
               size="xl"
               p={3}
             >
-              A Unique Place
+              {data && data["block_1"].heading}
             </Heading>
             <Image
               src="/templates/divider.png"
               width="30%"
               height="auto"
             />
-            <Text textAlign="center">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis condimentum augue id magna semper rutrum. Lorem ipsum dolor sit amet,
-              consectetuer adipiscing elit.
-            </Text>
+            <Text textAlign="center">{data && data["block_1"].paragraph}</Text>
           </VStack>
         </FlexTile>
         <FlexTile
@@ -58,22 +79,20 @@ export default function SectionWithBlocks() {
             width="100%"
             p={4}
             spacing="10"
+            id="swb-block_2"
           >
             <Heading
               size="xl"
               p={3}
             >
-              A Unique Place
+              {data && data["block_2"].heading}
             </Heading>
             <Image
               src="/templates/divider.png"
               width="30%"
               height="auto"
             />
-            <Text textAlign="center">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis condimentum augue id magna semper rutrum. Lorem ipsum dolor sit amet,
-              consectetuer adipiscing elit.
-            </Text>
+            <Text textAlign="center">{data && data["block_2"].paragraph}</Text>
           </VStack>
         </FlexTile>
         <FlexTile
@@ -180,3 +199,23 @@ function FlexTile({children, bg, order, noBorder}) {
     </Flex>
   );
 }
+
+SectionWithBlocks.editableProps = {
+  componentName: "swb-component",
+  block_1: {
+    name: "block_1",
+    label: "Block 1",
+    elements: [
+      {element: "heading", type: "text"},
+      {element: "paragraph", type: "paragraph"},
+    ],
+  },
+  block_2: {
+    name: "Block 2",
+    label: "Block 2",
+    elements: [
+      {element: "heading", type: "text"},
+      {element: "paragraph", type: "paragraph"},
+    ],
+  },
+};

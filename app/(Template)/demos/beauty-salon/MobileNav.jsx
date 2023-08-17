@@ -1,4 +1,16 @@
-import {Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, VStack, Link} from "@chakra-ui/react";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  VStack,
+  Link,
+  Center,
+} from "@chakra-ui/react";
+import {NAV_ITEMS} from "./navItems";
 
 export default function MobileNav({isOpen, onClose}) {
   return (
@@ -9,42 +21,37 @@ export default function MobileNav({isOpen, onClose}) {
         onClose={onClose}
         zIndex="9999"
         size="full"
+        p={0}
       >
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerBody>
+          <DrawerBody p={0}>
             <VStack
-              flex="1 1 0"
-              justifyContent="center"
               height="100%"
               textTransform="uppercase"
               fontSize="4xl"
             >
-              <Link
-                href="/"
-                p={4}
-              >
-                Massages
-              </Link>
-              <Link
-                href="/"
-                p={4}
-              >
-                Beauty Treatments
-              </Link>
-              <Link
-                href="/"
-                p={4}
-              >
-                Peeling
-              </Link>
-              <Link
-                href="/"
-                p={4}
-              >
-                SPA
-              </Link>
+              {NAV_ITEMS.map((item) => {
+                return (
+                  <Center
+                    flex="1 1 0"
+                    w="100%"
+                    _hover={{
+                      backgroundColor: "accent.100",
+                    }}
+                  >
+                    <Link
+                      href="/"
+                      p={4}
+                      alignItems="center"
+                      justifyItems="center"
+                    >
+                      {item}
+                    </Link>
+                  </Center>
+                );
+              })}
             </VStack>
           </DrawerBody>
         </DrawerContent>

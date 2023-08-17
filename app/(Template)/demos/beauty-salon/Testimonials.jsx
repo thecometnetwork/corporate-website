@@ -29,6 +29,7 @@ export default function Testimonials() {
                 zIndex="600"
                 position="relative"
                 p="30px"
+                fontSize={useBreakpointValue({base: "20px", md: "24px"})}
               >
                 {entry}
               </Text>
@@ -36,7 +37,7 @@ export default function Testimonials() {
                 as={ImQuotesRight}
                 boxSize="20"
                 position="absolute"
-                color="#FBD2C0"
+                color="accent.100"
                 zIndex="500"
                 top="0"
                 left="0"

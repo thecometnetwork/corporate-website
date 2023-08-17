@@ -15,6 +15,7 @@ import {
   Square,
   HStack,
   Select,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import {SettingsIcon, CloseIcon} from "@chakra-ui/icons";
 import "./styles.css";
@@ -23,9 +24,14 @@ import {useState, useEffect} from "react";
 export function Providers({children}) {
   const {isOpen, onOpen, onClose, onToggle} = useDisclosure({defaultIsOpen: false});
 
-  const colors = ["Black", "purple", "yellow", "green"];
+  const colors = ["#0D1C0F", "#399E5A", "#5ABCB9", "#63E2C6", "#6EF9F5", "#A2A2A2"];
 
   const [tempTheme, setTempTheme] = useState({
+    colors: {
+      accent: {
+        100: "#63E2C6",
+      },
+    },
     styles: {
       global: {
         "html, body": {
@@ -54,6 +60,7 @@ export function Providers({children}) {
   const [theme, setTheme] = useState(extendTheme(tempTheme));
   const [selectedColor, setSelectedColor] = useState();
   const [selectedTextColor, setSelectedTextColor] = useState();
+  const [selectedAccentColor, setSelectedAccentColor] = useState();
 
   useEffect(() => {
     console.log(theme);
@@ -70,6 +77,9 @@ export function Providers({children}) {
       _theme.styles.global["html, body"].color = color;
       setTempTheme(_theme);
       setSelectedTextColor(color);
+    }
+    if (item == "accent") {
+      _theme.colors.accent[100] = color;
     }
     setTheme(extendTheme(tempTheme));
   };
@@ -122,7 +132,7 @@ export function Providers({children}) {
         borderStyle="dashed"
         borderColor="orange.400"
         borderRadius="20px"
-        w="350px"
+        w="320px"
         sx={{
           "*": {
             color: "black",
@@ -174,6 +184,21 @@ export function Providers({children}) {
                   _hover={{border: "2px solid black", cursor: "pointer"}}
                   onClick={() => handleColor("text", color)}
                   border={selectedTextColor === color ? "2px solid black" : "2px solid white"}
+                  sx={{transition: "all 0.2s linear"}}
+                ></Circle>
+              );
+            })}
+          </HStack>
+          <Text as="span">Accent color (icons, backgrounds, ...)</Text>
+          <HStack>
+            {colors.map((color) => {
+              return (
+                <Circle
+                  bg={color}
+                  size="20px"
+                  _hover={{border: "2px solid black", cursor: "pointer"}}
+                  onClick={() => handleColor("accent", color)}
+                  border={selectedAccentColor === color ? "2px solid black" : "2px solid white"}
                   sx={{transition: "all 0.2s linear"}}
                 ></Circle>
               );

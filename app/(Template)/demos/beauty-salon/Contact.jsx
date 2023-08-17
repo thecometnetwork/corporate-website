@@ -26,7 +26,7 @@ export default function () {
 
   return (
     <Center
-      backgroundColor="#FBD2C0"
+      backgroundColor="accent.100"
       w="100%"
       p="100px"
     >
@@ -48,6 +48,7 @@ export default function () {
                     //   sx={{borderRadius: "0px"}}
                     borderColor="white"
                     borderRadius="0px"
+                    backgroundColor="white"
                     name={field.name}
                   />
                 ) : (
@@ -56,6 +57,7 @@ export default function () {
                     focusBorderColor="black"
                     borderColor="white"
                     borderRadius="0px"
+                    backgroundColor="white"
                     name={field.name}
                   />
                 )}
